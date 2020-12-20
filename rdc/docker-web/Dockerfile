@@ -1,10 +1,11 @@
-FROM php:7.3-apache
+FROM php:7.4-apache
 # I see there is now php:7.3-apache and 7.4 is a release candidate
 ## https://hub.docker.com/_/php/
 
 MAINTAINER andy123@stanford.edu
 ARG DEBIAN_FRONTEND=noninteractive
 
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 RUN apt-get update -qq && \
     apt-get -yq --no-install-recommends install \
     libapache2-mod-shib2 \
@@ -16,7 +17,7 @@ RUN apt-get update -qq && \
     libpng-dev \
     libzip-dev \
     zip \
-    && docker-php-ext-configure zip --with-libzip \
+    && docker-php-ext-configure zip \
     && docker-php-ext-install gd zip mysqli \
     ### cleanup \
     && rm -r /var/lib/apt/lists/*

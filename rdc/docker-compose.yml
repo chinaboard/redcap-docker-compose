@@ -61,26 +61,6 @@ services:
     networks:
       - redcap_network
 
-  mailhog:
-    container_name: ${DOCKER_PREFIX}_mailhog
-    build: docker-mailhog
-    restart: always
-    env_file: .env
-    depends_on:
-      - web
-    ports:
-      - "${MAILHOG_PORT}:8025"
-    volumes:
-      - ${MAILHOG_DIR}:/maildir
-      - ${MAILHOG_OUTGOING_SMTP_FILE}:/outgoing_smtp.json
-    environment:
-      MH_STORAGE: maildir
-      MH_MAILDIR_PATH: /maildir
-      MH_OUTGOING_SMTP: /outgoing_smtp.json
-      MH_UI_WEB_PATH: mailhog
-    networks:
-      - redcap_network
-
   # THIS CONTAINER IS OPTIONAL IF YOU WANT TO HAVE PHPMYADMIN - OTHERWISE COMMENT IT OUT
   phpmyadmin:
     container_name: ${DOCKER_PREFIX}_phpmyadmin
@@ -102,8 +82,6 @@ volumes:
     name: "${DOCKER_PREFIX}_mysql-volume"
   logs-volume:
     name: "${DOCKER_PREFIX}_logs-volume"
-  mailhog-volume:
-    name: "${DOCKER_PREFIX}_mailhog-volume"
 
 networks:
   redcap_network:

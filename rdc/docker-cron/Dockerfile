@@ -1,7 +1,7 @@
-FROM alpine:3.8
+FROM alpine:latest
 
 RUN apk add --no-cache tzdata logrotate
-ENV TZ America/Los_Angeles
+ENV TZ Asia/Shanghai
 
 COPY ./entrypoint.sh /
 RUN chmod +x /entrypoint.sh
